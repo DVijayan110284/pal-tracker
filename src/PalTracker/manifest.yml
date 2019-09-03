@@ -1,0 +1,11 @@
+---
+applications:
+- name: pal-tracker
+  path: src/PalTracker/bin/Release/netcoreapp2.1/publish/
+  random-route: true
+  env:
+    WELCOME_MESSAGE: I am coming from YML
+    Port: 8082
+    MemoryLimit: 800M
+    CfInstanceIndex: 1
+    CfInstanceAddr : 10.10.10.10
