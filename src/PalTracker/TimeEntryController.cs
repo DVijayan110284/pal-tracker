@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PalTracker
 {
-    [Route("/time-entries")]
+    [Route(" ")]
     public class TimeEntryController : ControllerBase
     {
         private ITimeEntryRepository _iTimeEntryRepository;
