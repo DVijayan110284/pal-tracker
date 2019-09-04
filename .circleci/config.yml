@@ -39,6 +39,7 @@ jobs:
             echo "deb https://packages.cloudfoundry.org/debian stable main" | tee /etc/apt/sources.list.d/cloudfoundry-cli.list
             apt-get update
             apt-get install cf-cli
+
        - run:
           name: Install jq
           command: |
@@ -83,8 +84,9 @@ jobs:
             echo "deb https://packages.cloudfoundry.org/debian stable main" | tee /etc/apt/sources.list.d/cloudfoundry-cli.list
             apt-get update
             apt-get install cf-cli
+            
        - run:
-        name: Install jq
+          name: Install jq
           command: |
             apt-get -y install jq
 
