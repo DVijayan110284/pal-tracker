@@ -1,0 +1,52 @@
+git remote add origin https://github.com/user/repo.git
+
+dotnet new
+
+dotnet new webapi --output src/PalTracker --name PalTracker
+
+rm -rf src/PalTracker/Controllers
+
+dotnet new xunit --output test/PalTrackerTests --name PalTrackerTests
+
+dotnet add test/PalTrackerTests reference src/PalTracker/PalTracker.csproj
+
+rm test/PalTrackerTests/UnitTest1.cs
+
+dotnet new sln --name PalTracker
+
+dotnet sln PalTracker.sln add src/PalTracker/PalTracker.csproj
+
+dotnet sln PalTracker.sln add test/PalTrackerTests/PalTrackerTests.csproj
+
+dotnet run --project src/PalTracker
+
+dotnet publish src/PalTracker --configuration Release
+
+cf login -a <cf-api-endpoint>
+
+cf push pal-tracker --random-route -p src/PalTracker/bin/Release/netcoreapp2.1/publish
+
+cf env pal-tracker
+
+cf services
+
+cf target -s production
+
+cf set-env pal-tracker MANAGEMENT__ENDPOINTS__CLOUDFOUNDRY__ENABLED false
+
+git add *
+git commit -m "Initial commit"
+git push -u origin master
+
+./gradlew cloudNativeDeveloperPipelines -PreviewUrl=https://pal-tracker-zany-hippopotamus.cfapps.io/ -PproductionUrl=https://pipeline-pal-tracker-production.cfapps.io/
+./gradlew cloudNativeDeveloperRest -PserverUrl=https://pipeline-pal-tracker-production.cfapps.io
+
+./gradlew cloudNativeDeveloperDatabaseMigrations -PserverUrl=https://[app-url]
+flyway -url="jdbc:mysql://localhost:3306/tracker_dotnet_test" -user=tracker_dotnet -password=password -locations=filesystem:databases/tracker migrate
+flyway -url="jdbc:mysql://localhost:3306/tracker_dotnet_test" -user=tracker_dotnet -password=password -locations=filesystem:databases/tracker undo
+
+mysql -uroot
+show databases;
+use database;
+show tables;
+select * from tablename;
